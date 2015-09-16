@@ -8,23 +8,24 @@ var config = require('./config.json');
 
 var app = koa();
 
-router.get('/', routes.hello);
-
 // Ensure we allow access
 app.use(cors({
   methods: ['GET','HEAD']
 }));
 
+// Routes
+router.get('/', routes.hello);
+
 // Set up proxies, if any are supplied in config file
-if (config.proxy.length > 0) {
+if ((config.proxy) && (config.proxy.length > 0)) {
   _.forEach(config.proxy, function (prx) {
-    app.use(proxy(prx.prefix, prx.target));
+    app.use(proxy(prx.prefix, prx.target, prx.mustContain));
   });
 }
 
 app
   .use(router.routes())
   .use(router.allowedMethods())
-  .listen(3000);
+  .listen(config.port);
 
-console.log('listening on port 3000');
+console.log('listening on port ' + config.port);

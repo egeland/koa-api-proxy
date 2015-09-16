@@ -5,8 +5,9 @@
       "target": "https://api.github.com/users"
     },
     {
-      "prefix": "/guardian",
-      "target": "http://content.guardianapis.com/au?api-key=test&show-editors-picks=true"
+      "prefix": "/elasticsearch",
+      "mustContain": "/_cluster/health"
     }
-  ]
+  ],
+  "port": 3000
 }
